@@ -37,7 +37,12 @@ const SignIn: React.FC = (props: Props): JSX.Element => {
         placeholder="Username"
         name="username"
         onChange={(e) => handleChange(e)}
-        min="3"
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        name="email"
+        onChange={(e) => handleChange(e)}
       />
       <input
         type="password"
@@ -45,9 +50,15 @@ const SignIn: React.FC = (props: Props): JSX.Element => {
         name="password"
         onChange={(e) => handleChange(e)}
       />
-      <button type="submit">Sign In</button>
+      <input
+        type="password"
+        placeholder="Confirm Password"
+        name="confirmPassword"
+        onChange={(e) => handleChange(e)}
+      />
+      <button type="submit">Create User</button>
       <span>
-        Don't have an account ? <Link to="/auth/sign-up">Create One.</Link>
+        Already have an account ? <Link to="/auth/sign-in">Login.</Link>
       </span>
     </form>
   );

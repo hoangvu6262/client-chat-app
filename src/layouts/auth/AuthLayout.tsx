@@ -1,6 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
+import "./styles.scss";
+
 type Props = {};
 
 const AuthLayout = (props: Props) => {
