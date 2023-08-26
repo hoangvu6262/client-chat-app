@@ -7,10 +7,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.0",
-<<<<<<< HEAD
     "@mui/icons-material": "^5.14.6",
-=======
->>>>>>> master
     "@mui/material": "^5.14.6",
     "@prisma/client": "^5.2.0",
     "@testing-library/jest-dom": "^5.17.0",
@@ -20,12 +17,9 @@
     "@types/node": "^16.18.46",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
-<<<<<<< HEAD
+    "axios": "^1.5.0",
     "dotenv": "^10.0.0",
     "emoji-picker-react": "^4.4.11",
-=======
-    "axios": "^1.5.0",
->>>>>>> master
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.4",
