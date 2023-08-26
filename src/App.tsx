@@ -1,24 +1,61 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AuthLayout from "./layouts/auth/AuthLayout";
-import ChatRoom from "./layouts/chat/ChatRoomLayout";
+import ChatRoomLayout from "./layouts/chat/ChatRoomLayout";
+import Messenger from "./pages/chat/Messenger/Messenger";
 
-import SignIn from "./pages/auth/SignIn/SignIn";
-import SignUp from "./pages/auth/SignUp/SignUp";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  RedirectToSignIn,
+  SignIn,
+  SignUp,
+} from "@clerk/clerk-react";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+
+if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key");
+}
+
+const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
+
+function ClerkProviderWithRoutes() {
+  const navigate = useNavigate();
+
+  return (
+    <ClerkProvider publishableKey={clerkPubKey} navigate={(to) => navigate(to)}>
+      <Routes>
+        <Route
+          path="/sign-in/*"
+          element={<SignIn routing="path" path="/sign-in" />}
+        />
+        <Route
+          path="/sign-up/*"
+          element={<SignUp routing="path" path="/sign-up" />}
+        />
+        <Route
+          path="/"
+          element={
+            <>
+              <SignedIn>
+                <ChatRoomLayout />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
+        >
+          <Route path="messenger" element={<Messenger />} />
+        </Route>
+      </Routes>
+    </ClerkProvider>
+  );
+}
 
 function App() {
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/auth" element={<AuthLayout />}>
-            <Route path="sign-in" element={<SignIn />} />
-            <Route path="sign-up" element={<SignUp />} />
-          </Route>
-          <Route path="/chat" element={<ChatRoom />} />
-        </Routes>
-      </Router>
-    </>
+    <BrowserRouter>
+      <ClerkProviderWithRoutes />
+    </BrowserRouter>
   );
 }
 

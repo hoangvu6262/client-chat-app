@@ -1,9 +1,19 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
+import "./styles.scss";
+import { useUser } from "@clerk/clerk-react";
 
 type Props = {};
 
-const ChatRoom = (props: Props) => {
-  return <div>ChatRoom</div>;
+const ChatRoomLayout = (props: Props) => {
+  const { isLoaded, isSignedIn, user } = useUser();
+
+  console.log(isLoaded, isSignedIn, user);
+  return (
+    <div className="chat-container">
+      <Outlet />
+    </div>
+  );
 };
 
-export default ChatRoom;
+export default ChatRoomLayout;
