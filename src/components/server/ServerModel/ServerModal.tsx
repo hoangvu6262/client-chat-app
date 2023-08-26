@@ -9,7 +9,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import CustomModal from "../shared/Modal/Modal";
+import CustomModal from "../../shared/Modal/Modal";
 
 type Props = {};
 
