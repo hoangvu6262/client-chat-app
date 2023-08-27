@@ -1,4 +1,5 @@
 /// <reference types="react-scripts" />
+
 interface IUser {
   _id: string;
   username: string;
@@ -102,4 +103,8 @@ interface IDirectMessage {
 
   createdAt: string;
   updatedAt: string;
+}
+
+declare global {
+  var prisma: PrismaClient;
 }
