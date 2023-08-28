@@ -1,0 +1,24 @@
+.server-list {
+    .avatar-image {
+        border: 3px solid transparent;
+        &:hover {
+            border: 3px solid #12b982;
+            border-radius: 50%;
+        }
+
+        img {
+            cursor: pointer;
+            
+        }
+    }
+    .active {
+        border: 3px solid #12b982 !important;
+        border-radius: 50%;
+    }
+
+    .inactive {
+        border: 3px solid transparent;
+        border-radius: 50%;
+    }
+    
+}

@@ -1,0 +1,42 @@
+.avatar-upload {
+    border-radius: 18px !important;
+    padding: 10px 15px;
+    width: 100%;
+    // height: 100%;
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+
+    &__logo {
+        border: 2px dashed #12b982;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+        display : flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        &-avatar {
+            background-color: rgb(244, 246, 248);
+            border-radius: 50% !important;
+            width: 140px !important;
+            height: 140px !important;
+        }
+    }
+
+    &__file-input {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+        
+    }
+        
+            
+}

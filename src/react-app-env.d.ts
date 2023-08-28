@@ -1,15 +1,16 @@
 /// <reference types="react-scripts" />
 
 interface IUser {
-  _id: string;
+  _id?: string;
   username: string;
+  userId: string;
   email: string;
   password?: string;
   isAvatarImageSet?: boolean;
   avatarImage: string;
 
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface IMessage {
@@ -30,10 +31,9 @@ interface IServer {
   _id: string;
   name: string;
   imageUrl: string;
-  inviteCode: string;
+  inviteCode?: string;
 
   userId: String;
-  user: IUser;
 
   members: IMember[];
   channels: IChannel[];
@@ -93,7 +93,7 @@ interface IConversation {
 interface IDirectMessage {
   _id: string;
   content: string;
-  fileUrl: stirng;
+  fileUrl: string;
 
   memberId: string;
   member: IMember;
@@ -103,8 +103,4 @@ interface IDirectMessage {
 
   createdAt: string;
   updatedAt: string;
-}
-
-declare global {
-  var prisma: PrismaClient;
 }

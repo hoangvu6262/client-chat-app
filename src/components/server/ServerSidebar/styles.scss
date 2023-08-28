@@ -1,0 +1,47 @@
+.server-sidebar {
+    display: grid;
+    grid-template-rows: 10% 80% 10%;
+    overflow: hidden;
+    background-color: #1e1f22;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    
+    &__add {
+        padding: 15px 0px;
+        display: flex;
+        flex-direction: column;
+        // justify-content: space-around;
+        gap: 10px;
+        align-items: center;
+
+        button {
+            background-color: #3e3e3e;
+            color: #12b982;
+
+            &:hover {
+                background-color: #12b982;
+                color: #ffffff
+            }
+        }
+        hr {
+            margin: 0px auto ;
+            width: 75%;
+            background-color: #313338;
+            height: 3px;
+        }
+    }
+
+    &__main {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    &__current-user {
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

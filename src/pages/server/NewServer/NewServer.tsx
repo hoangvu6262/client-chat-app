@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
-import ServerModal from "../../../components/server/ServerModel/ServerModal";
-import { RefType } from "../../../components/server/ServerModel/ServerModal";
+import ServerModal from "../../../components/server/ServerModal/ServerModal";
+import { RefType } from "../../../components/server/ServerModal/ServerModal";
 
 type Props = {};
 

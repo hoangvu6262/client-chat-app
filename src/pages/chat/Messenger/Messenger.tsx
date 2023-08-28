@@ -1,22 +1,21 @@
-import React, { useState } from "react";
-import Contact from "../../../components/chat/Contact/Contact";
-import Welcome from "../../../components/chat/Welcome";
+import React, { useContext } from "react";
+
+import Welcome from "../../../components/chat/Welcome/Welcome";
 import ChatContainer from "../../../components/chat/ChatContainer/ChatContainer";
+import { MessengerContext } from "../../../configs/context/MessengerContext";
 
 const Messenger: React.FC = (): JSX.Element => {
-  const [contacts, setContacts] = useState([]);
-  const [currentChat, setCurrentChat] = useState<IUser | null>(null);
-  const [currentUser, setCurrentUser] = useState<IUser | null>(null);
-
-  const handleChatChange = (contact: IUser) => {
-    setCurrentChat(contact);
-  };
+  const { messState } = useContext(MessengerContext);
+  const { currentUser, currentChat } = messState;
 
   return (
-    <div className="container">
-      <Contact contacts={contacts} changeChat={handleChatChange} />
-      {!currentChat ? <Welcome /> : <ChatContainer currentChat={currentChat} />}
-    </div>
+    <>
+      {!currentChat ? (
+        <Welcome username={currentUser ? currentUser.username : ""} />
+      ) : (
+        <ChatContainer currentChat={currentChat} />
+      )}
+    </>
   );
 };
 

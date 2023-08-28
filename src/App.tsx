@@ -1,6 +1,5 @@
 import ChatRoomLayout from "./layouts/chat/ChatRoomLayout";
 import Messenger from "./pages/chat/Messenger/Messenger";
-import NewServer from "./pages/server/NewServer/NewServer";
 
 import {
   ClerkProvider,
@@ -32,7 +31,7 @@ function ClerkProviderWithRoutes() {
           path="/sign-up/*"
           element={<SignUp routing="path" path="/sign-up" />}
         />
-        <Route
+        {/* <Route
           path="/"
           element={
             <>
@@ -44,8 +43,21 @@ function ClerkProviderWithRoutes() {
               </SignedOut>
             </>
           }
+        ></Route> */}
+        <Route
+          path="/server"
+          element={
+            <>
+              <SignedIn>
+                <ChatRoomLayout />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
         >
-          {/* <Route path="messenger" element={<Messenger />} /> */}
+          <Route path=":serverId" element={<Messenger />} />
         </Route>
       </Routes>
     </ClerkProvider>

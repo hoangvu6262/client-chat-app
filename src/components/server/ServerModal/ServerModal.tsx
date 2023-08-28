@@ -7,9 +7,12 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 
 import CustomModal from "../../shared/Modal/Modal";
+import serverAPI from "../../../api/severApi";
+import { useUser } from "@clerk/clerk-react";
+import AvatarUpload from "../../shared/AvatarUpload/AvatarUpload";
 
 type Props = {};
 
@@ -22,15 +25,13 @@ const formSchema = z.object({
   name: z.string().min(1, {
     message: "Server name is required.",
   }),
-  imageUrl: z.string().min(1, {
-    message: "Server image is required.",
-  }),
+  imageUrl: z.any(),
 });
 
 const ServerModal = (props: Props, ref: Ref<RefType>) => {
   const [open, setOpen] = useState<boolean>(false);
-
-  const form = useForm({
+  const { user } = useUser();
+  const methods = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -38,22 +39,38 @@ const ServerModal = (props: Props, ref: Ref<RefType>) => {
     },
   });
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = methods;
+
   useImperativeHandle(ref, () => ({
     onOpen: handleOpen,
     onClose: handleClose,
   }));
 
-  const isLoading = form.formState.isSubmitting;
+  if (!user) {
+    return null;
+  }
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // try {
-    //   await axios.post("/api/servers", values);
-    //   form.reset();
-    //   router.refresh();
-    //   onClose();
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const reader = new FileReader();
+      console.log(values.imageUrl[0].mozFullPath);
+      const newServer = {
+        userId: user.id,
+        server: {
+          name: values.name,
+          imageUrl: values.imageUrl[0].name,
+        },
+      };
+      await serverAPI.createNewServer(newServer);
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleOpen = () => {
@@ -71,20 +88,25 @@ const ServerModal = (props: Props, ref: Ref<RefType>) => {
           Give your server a personality with a name and an image. You can
           always change it later.
         </DialogContentText>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          //   label="Email Address"
-          type="text"
-          placeholder="Create a new server"
-          fullWidth
-          //   variant="standard"
-        />
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <AvatarUpload name="imageUrl" />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              {...register("name")}
+              type="text"
+              placeholder="Create a new server"
+              fullWidth
+              //   variant="standard"
+            />
+            <Button onClick={handleSubmit(onSubmit)}>Create</Button>
+          </form>
+        </FormProvider>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleClose}>Subscribe</Button>
       </DialogActions>
     </CustomModal>
   );

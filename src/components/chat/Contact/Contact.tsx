@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./styles.scss";
-import { UserButton } from "@clerk/clerk-react";
+import { useParams } from "react-router-dom";
+import serverAPI from "../../../api/severApi";
+import { useQuery } from "react-query";
 
 type Props = {
   contacts: IUser[];
@@ -11,59 +13,34 @@ const Contact: React.FC<Props> = ({
   contacts = [],
   changeChat,
 }): JSX.Element => {
-  const [currentUserName, setCurrentUserName] = useState<string | null>(null);
-  const [currentUserImage, setCurrentUserImage] = useState<string | null>(null);
-  const [currentSelected, setCurrentSelected] = useState<number | null>(null);
+  const [server, setServer] = useState<IServer | null>(null);
 
-  const changeCurrentChat = (index: number, contact: IUser) => {
-    setCurrentSelected(index);
-    changeChat(contact);
-  };
+  const { serverId } = useParams();
+
+  useQuery<IServer, Error>({
+    queryKey: ["getServerByServerId", serverId],
+    queryFn: async () => {
+      return await serverAPI.getServerByServerId(serverId);
+    },
+    enabled: !!serverId,
+    retry: 1,
+    refetchOnWindowFocus: false,
+    onSuccess: (res) => {
+      setServer(res);
+    },
+  });
+
+  // const textChannels = server?.channels.filter((channel) => channel.type === ChannelType.TEXT)
+  // const audioChannels = server?.channels.filter((channel) => channel.type === ChannelType.AUDIO)
+  // const videoChannels = server?.channels.filter((channel) => channel.type === ChannelType.VIDEO)
+  // const members = server?.members.filter((member) => member.userId !== profile.id)
 
   return (
     <div className="contact-container">
       <div className="brand">
-        <img
-          src="https://images.ctfassets.net/hrltx12pl8hq/3j5RylRv1ZdswxcBaMi0y7/b84fa97296bd2350db6ea194c0dce7db/Music_Icon.jpg"
-          alt="logo"
-        />
-        <h3>snappy</h3>
+        <h3>{server?.name}</h3>
       </div>
-      <div className="contacts">
-        {contacts.map((contact, index) => {
-          return (
-            <div
-              key={contact._id}
-              className={`contact ${
-                index === currentSelected ? "selected" : ""
-              }`}
-              onClick={() => changeCurrentChat(index, contact)}
-            >
-              <div className="avatar">
-                <img
-                  src="https://images.ctfassets.net/hrltx12pl8hq/3j5RylRv1ZdswxcBaMi0y7/b84fa97296bd2350db6ea194c0dce7db/Music_Icon.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="username">
-                <h3>{contact.username}</h3>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="current-user">
-        {/* <div className="avatar">
-          <img
-            src="https://images.ctfassets.net/hrltx12pl8hq/3j5RylRv1ZdswxcBaMi0y7/b84fa97296bd2350db6ea194c0dce7db/Music_Icon.jpg"
-            alt="avatar"
-          />
-        </div>
-        <div className="username">
-          <h2>{currentUserName}</h2>
-        </div> */}
-        <UserButton afterSignOutUrl="/" />
-      </div>
+      <div className="contacts"></div>
     </div>
   );
 };
