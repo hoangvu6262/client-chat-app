@@ -1,4 +1,5 @@
 import ChatRoomLayout from "./layouts/chat/ChatRoomLayout";
+import ServerLayout from "./layouts/server/ServerLayout";
 import Messenger from "./pages/chat/Messenger/Messenger";
 
 import {
@@ -10,6 +11,10 @@ import {
   SignUp,
 } from "@clerk/clerk-react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+// Create a client
+const queryClient = new QueryClient();
 
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
@@ -22,44 +27,35 @@ function ClerkProviderWithRoutes() {
 
   return (
     <ClerkProvider publishableKey={clerkPubKey} navigate={(to) => navigate(to)}>
-      <Routes>
-        <Route
-          path="/sign-in/*"
-          element={<SignIn routing="path" path="/sign-in" />}
-        />
-        <Route
-          path="/sign-up/*"
-          element={<SignUp routing="path" path="/sign-up" />}
-        />
-        {/* <Route
-          path="/"
-          element={
-            <>
-              <SignedIn>
-                <NewServer />
-              </SignedIn>
-              <SignedOut>
-                <RedirectToSignIn />
-              </SignedOut>
-            </>
-          }
-        ></Route> */}
-        <Route
-          path="/server"
-          element={
-            <>
-              <SignedIn>
-                <ChatRoomLayout />
-              </SignedIn>
-              <SignedOut>
-                <RedirectToSignIn />
-              </SignedOut>
-            </>
-          }
-        >
-          <Route path=":serverId" element={<Messenger />} />
-        </Route>
-      </Routes>
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route
+            path="/sign-in/*"
+            element={<SignIn routing="path" path="/sign-in" />}
+          />
+          <Route
+            path="/sign-up/*"
+            element={<SignUp routing="path" path="/sign-up" />}
+          />
+          <Route
+            path="/server/*"
+            element={
+              <>
+                <SignedIn>
+                  <ServerLayout />
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+              </>
+            }
+          >
+            <Route path=":serverId" element={<ChatRoomLayout />}>
+              <Route path="channel/:channelId" element={<Messenger />} />
+            </Route>
+          </Route>
+        </Routes>
+      </QueryClientProvider>
     </ClerkProvider>
   );
 }

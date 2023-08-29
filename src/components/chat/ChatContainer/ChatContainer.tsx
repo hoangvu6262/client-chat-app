@@ -84,12 +84,12 @@ const ChatContainer: React.FC<Props> = ({
         <div className="user-details">
           <div className="avatar">
             <img
-              src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
+              src={`data:image/svg+xml;base64,${currentChat?.avatarImage}`}
               alt=""
             />
           </div>
           <div className="username">
-            <h3>{currentChat.username}</h3>
+            <h3>{currentChat?.username}</h3>
           </div>
         </div>
       </div>

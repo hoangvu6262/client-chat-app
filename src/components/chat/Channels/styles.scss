@@ -1,0 +1,90 @@
+.channel-container {
+    display: grid;
+    grid-template-rows: 5% 95%;
+    overflow: hidden;
+    background-color: #2b2d31;
+    &__header {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        cursor: pointer;
+
+        svg {
+            color: #707174;
+        }
+
+        h3 {
+            color: #707174;
+        }
+
+        &:hover {
+            svg {
+                color: aliceblue;
+            }
+    
+            h3 {
+                color: aliceblue;
+            }
+        }
+    }
+
+    &__main {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        color: #a1a1aa;
+
+        h4 {
+            font-size: 13px;
+            font-weight:500;
+            text-transform: uppercase;
+        }
+
+        &-box {
+            &__header {
+                padding: 5px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                span {
+                    cursor: pointer;
+                }
+
+                svg {
+                    color: #a1a1aa;
+                }
+            }
+
+            .channel-item {
+                color: #a1a1aa;
+                text-decoration: none;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap:8px;
+                font-size: 14px;
+                padding: 10px;
+
+                &:hover {
+                    background-color: #3f3f46;
+                    color: aliceblue
+                }
+
+                svg {
+                    width: 23px;
+                    height: 23px;
+                }
+            }
+
+            .active {
+                background-color: #3f3f46;
+                    color: aliceblue
+            }
+        }
+    }
+    
+}

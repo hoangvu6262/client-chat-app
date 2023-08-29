@@ -2,7 +2,7 @@ import React from "react";
 import Robot from "../../../assets/img/robot.gif";
 
 type Props = {
-  username: string;
+  username?: string;
 };
 
 const Welcome: React.FC<Props> = ({ username }): JSX.Element => {
