@@ -1,4 +1,4 @@
-import { useRef, ChangeEvent } from "react";
+import { useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import classNames from "classnames";
 
@@ -15,6 +15,8 @@ type Props = {
   rows?: number;
   Icon?: () => JSX.Element;
   errors?: any;
+  value?: string;
+  disable?: boolean;
 };
 
 const CustomInput: React.FC<Props> = ({
@@ -28,9 +30,10 @@ const CustomInput: React.FC<Props> = ({
   placeholder,
   Icon,
   errors,
+  value,
+  disable = false,
 }) => {
   const { register } = useFormContext();
-  const inputRef = useRef(null);
 
   // const onChangeInput = (
   //   e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -48,9 +51,8 @@ const CustomInput: React.FC<Props> = ({
         <p>{label}</p>
       </div>
       <TextField
-        inputRef={inputRef}
-        // name={name}
         {...register(name)}
+        value={value}
         autoFocus
         size="small"
         margin="dense"
@@ -62,6 +64,9 @@ const CustomInput: React.FC<Props> = ({
         multiline={multiline}
         minRows={rows}
         maxRows={maxRows}
+        InputProps={{
+          readOnly: disable,
+        }}
         InputLabelProps={{ shrink: true }}
         // onChange={(e) => onChangeInput(e)}
       />

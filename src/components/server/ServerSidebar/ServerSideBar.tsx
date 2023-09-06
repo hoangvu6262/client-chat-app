@@ -55,7 +55,7 @@ const ServerSideBar = () => {
         <ServerItems listServers={servers} />
       </div>
       <div className="server-sidebar__current-user">
-        <UserButton afterSignOutUrl="/" />
+        <UserButton afterSignOutUrl="/sign-in" />
       </div>
       <ServerModal ref={modalRef} addNewServer={addNewServer} />
     </div>

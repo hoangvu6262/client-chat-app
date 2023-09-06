@@ -69,7 +69,7 @@ const Channel: React.FC = (): JSX.Element => {
     return listChannels.map((channel) => {
       return (
         <NavLink
-          to={`channel/${channel._id}`}
+          to={`${serverId}/channel/${channel._id}`}
           key={channel._id}
           className={({ isActive }) =>
             `channel-item ${isActive ? "active" : "inactive"} `
