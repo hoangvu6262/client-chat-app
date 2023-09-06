@@ -104,3 +104,5 @@ interface IDirectMessage {
 type ChannelType = "text" | "audio" | "video";
 
 type ModalType = "channel" | "sever" | "invite";
+
+type ChatAppArray<ElemTypes> = ElemTypes[];

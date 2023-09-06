@@ -1,0 +1,62 @@
+@import "../variables";
+@import "../mixins";
+
+.cus-input {
+    width: 100%;
+    margin-bottom: 20px;
+
+    &__lable{
+        @include flextop();
+        align-items: center;
+        gap: 10px;
+        width: 400px;
+        height: max-content;
+        p {
+          margin: 0;
+          font-size: 14px;
+          font-weight: 200;
+        }
+    }
+    
+
+    .MuiTextField-root {
+        .MuiInputBase-root { 
+            background-color: #FFFFFF; 
+            // padding: 0px;
+            // .MuiInputBase-input {
+            //     // width: 300px;
+            //     padding:5px;
+            //     font-size: 13px;
+            // } 
+                
+        }
+        // .MuiOutlinedInput-root {
+        //     &:hover fieldset {
+        //         border-color: $purple-default;
+        //     }
+        //     .Mui-focused fieldset{
+        //         border-color: $purple-default !important;
+        //     }
+
+        // }
+    }
+
+    &--err {
+        color: $red-active;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+}
+
+.error {
+  .MuiFormControl-root { 
+    .MuiFormLabel-root {
+      color: $red-active
+    }
+    .MuiOutlinedInput-root {
+      .MuiOutlinedInput-notchedOutline{
+        border-color: $red-active !important;
+      }
+    }
+  }
+}

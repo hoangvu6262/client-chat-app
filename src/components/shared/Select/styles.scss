@@ -1,0 +1,39 @@
+@use "../../../assets/styles/common.scss" as *;
+
+.common-select {
+    p {
+        padding-bottom: 5px;
+        font-size: 12px;
+    }
+    .MuiBox-root {
+        .MuiFormControl-root {
+            padding-bottom: 0px !important;
+            height: max-content !important;
+            .MuiInputBase-root {
+                // border-radius: 10px !important;
+                .MuiSelect-select {
+                    padding: 5px 30px 5px 10px !important;
+                }
+
+                .MuiInputBase-input {
+                    font-size: 13px;
+                    font-family: $font-family-sans-serif;
+                }
+            }
+        }
+    }
+    &--err {
+        color: #df1f1f;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+}
+.MuiPaper-root {
+    // margin-left: 10px !important;
+    .MuiList-root {
+        li {
+            font-size: 13px;
+            font-family: $font-family-sans-serif;
+        }
+    }
+}

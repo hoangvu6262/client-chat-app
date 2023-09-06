@@ -14,6 +14,9 @@ import { useUser } from "@clerk/clerk-react";
 import CustomModal from "../../shared/Modal/Modal";
 import useModal from "../../../hooks/useModal";
 import channelAPI from "../../../api/channelApi";
+import CommonSelect from "../../shared/Select/Select";
+import CustomInput from "../../shared/Input/CustomInput";
+import { LIST_CHANNEL_TYPES } from "../../../configs/constant/channel";
 
 type Props = {
   addChannel: (data: IChannel) => void;
@@ -32,6 +35,11 @@ const formSchema = z.object({
   }),
 });
 
+const initialValue = {
+  name: "",
+  type: "",
+};
+
 const ChannelModal = ({ addChannel }: Props, ref: Ref<ChannelModalRefType>) => {
   const { open, _handleToggle } = useModal();
   const { user } = useUser();
@@ -44,17 +52,14 @@ const ChannelModal = ({ addChannel }: Props, ref: Ref<ChannelModalRefType>) => {
 
   const methods = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      type: "",
-    },
+    defaultValues: initialValue,
   });
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = methods;
 
   if (!user || !serverId) {
@@ -62,6 +67,7 @@ const ChannelModal = ({ addChannel }: Props, ref: Ref<ChannelModalRefType>) => {
   }
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values);
     try {
       const data: IChannel = {
         ...values,
@@ -86,27 +92,17 @@ const ChannelModal = ({ addChannel }: Props, ref: Ref<ChannelModalRefType>) => {
         </DialogContentText>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              {...register("name")}
+            <CustomInput
+              label="Name"
+              name="name"
               type="text"
-              size="small"
-              placeholder="Create a new server"
-              fullWidth
-              //   variant="standard"
+              placeholder="Name of Server"
             />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="type"
-              {...register("type")}
-              type="text"
-              size="small"
-              placeholder="Create a new server"
-              fullWidth
-              //   variant="standard"
+            <CommonSelect
+              id="channel-types-select"
+              name="type"
+              listItem={LIST_CHANNEL_TYPES}
+              errors={errors}
             />
             <DialogActions>
               <Button onClick={handleSubmit(onSubmit)}>Create</Button>
