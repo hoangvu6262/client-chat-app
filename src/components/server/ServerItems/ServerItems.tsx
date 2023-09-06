@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 import "./styles.scss";
 
@@ -16,10 +16,12 @@ const ServerItem: React.FC<serverItemProps> = ({
   serverImage,
   id,
 }) => {
+  const { serverId } = useParams();
+
   return (
     <NavLink
       className={({ isActive }) =>
-        `avatar-image ${isActive ? "active" : "inactive"} `
+        `avatar-image ${isActive && serverId === id ? "active" : "inactive"} `
       }
       to={id}
     >

@@ -35,6 +35,10 @@ const ServerSideBar = () => {
     modalRef.current?.onToggle();
   };
 
+  const addNewServer = (server: IServer) => {
+    setServers([...servers, server]);
+  };
+
   return (
     <div className="server-sidebar">
       <div className="server-sidebar__add">
@@ -53,7 +57,7 @@ const ServerSideBar = () => {
       <div className="server-sidebar__current-user">
         <UserButton afterSignOutUrl="/" />
       </div>
-      <ServerModal ref={modalRef} />
+      <ServerModal ref={modalRef} addNewServer={addNewServer} />
     </div>
   );
 };
