@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./styles.scss";
 import { useParams } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { useQuery } from "react-query";
-import ClearAllIcon from "@mui/icons-material/ClearAll";
-import KeyboardVoiceOutlinedIcon from "@mui/icons-material/KeyboardVoiceOutlined";
-import MissedVideoCallOutlinedIcon from "@mui/icons-material/MissedVideoCallOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 import serverAPI from "../../../api/severApi";
@@ -13,11 +10,15 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuDropdown from "../MenuDropdown/MenuDropdown";
 import { CHANNEL_TYPE, CHANNEL_TITLE } from "../../../configs/constant/channel";
 import channelAPI from "../../../api/channelApi";
+import ChannelIcon from "../ChannelIcon/ChannelIcon";
+import ChannelModal from "../ChannelModal/ChannelModal";
+import { ChannelModalRefType } from "../ChannelModal/ChannelModal";
 
 const Channel: React.FC = (): JSX.Element => {
   const [server, setServer] = useState<IServer | null>(null);
-  const [channels, setChannels] = useState<IChannel[] | null>(null);
+  const [channels, setChannels] = useState<IChannel[]>([]);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const modalRef = useRef<ChannelModalRefType>(null);
 
   const { serverId } = useParams();
 
@@ -64,17 +65,6 @@ const Channel: React.FC = (): JSX.Element => {
   );
   // const members = server?.members.filter((member) => member.userId !== profile.id)
 
-  const renderChannelIcon = (type: string) => {
-    switch (type) {
-      case CHANNEL_TYPE.AUDIO:
-        return <KeyboardVoiceOutlinedIcon />;
-      case CHANNEL_TYPE.VIDEO:
-        return <MissedVideoCallOutlinedIcon />;
-      default:
-        return <ClearAllIcon />;
-    }
-  };
-
   const rederChannel = (listChannels: IChannel[], type: string) => {
     return listChannels.map((channel) => {
       return (
@@ -85,7 +75,7 @@ const Channel: React.FC = (): JSX.Element => {
             `channel-item ${isActive ? "active" : "inactive"} `
           }
         >
-          {renderChannelIcon(type)}
+          <ChannelIcon type={type.toLowerCase() as ChannelType} />
           <p>{channel.name}</p>
         </NavLink>
       );
@@ -101,7 +91,7 @@ const Channel: React.FC = (): JSX.Element => {
         <div className="channel-container__main-box">
           <div className="channel-container__main-box__header">
             <h4>{CHANNEL_TITLE[type]}</h4>
-            <span>
+            <span onClick={() => modalRef.current?.onOpen()}>
               <AddOutlinedIcon fontSize="small" />
             </span>
           </div>
@@ -109,6 +99,10 @@ const Channel: React.FC = (): JSX.Element => {
         </div>
       );
     }
+  };
+
+  const handleAddChannel = (data: IChannel) => {
+    setChannels([...channels, data]);
   };
 
   return (
@@ -129,6 +123,7 @@ const Channel: React.FC = (): JSX.Element => {
         )}
       </div>
       <MenuDropdown anchorEl={anchorEl} handleClose={handleClose} />
+      <ChannelModal ref={modalRef} addChannel={handleAddChannel} />
     </>
   );
 };

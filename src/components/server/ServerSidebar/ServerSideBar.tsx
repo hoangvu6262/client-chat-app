@@ -18,7 +18,7 @@ const ServerSideBar = () => {
   const { currentUser } = messState;
 
   // Queries
-  const { refetch: getAllTutorials } = useQuery<IServer[], Error>({
+  useQuery<IServer[], Error>({
     queryKey: ["getAllServerByUserId", currentUser?.userId],
     queryFn: async () => {
       return await serverAPI.getAllServerByUserId(currentUser?.userId);
@@ -31,8 +31,8 @@ const ServerSideBar = () => {
     },
   });
 
-  const handleOpenModel = () => {
-    modalRef.current?.onOpen();
+  const handleOpenModal = () => {
+    modalRef.current?.onToggle();
   };
 
   return (
@@ -41,7 +41,7 @@ const ServerSideBar = () => {
         <IconButton
           aria-label="Add server"
           size="medium"
-          onClick={handleOpenModel}
+          onClick={handleOpenModal}
         >
           <AddIcon fontSize="inherit" />
         </IconButton>

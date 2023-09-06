@@ -50,7 +50,7 @@ function ClerkProviderWithRoutes() {
               </>
             }
           >
-            <Route path=":serverId" element={<ChatRoomLayout />}>
+            <Route path=":serverId/*" element={<ChatRoomLayout />}>
               <Route path="channel/:channelId" element={<Messenger />} />
             </Route>
           </Route>

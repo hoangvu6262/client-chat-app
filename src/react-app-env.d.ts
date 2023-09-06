@@ -47,10 +47,8 @@ interface IMember {
   role: string;
 
   userId: String;
-  user: IUser;
 
   serverId: string;
-  server: IServer;
 
   messages: IMessage[];
   directMessages: IDirectMessage[];
@@ -63,20 +61,18 @@ interface IMember {
 }
 
 interface IChannel {
-  _id: string;
+  _id?: string;
   name: string;
   type: string;
 
   userId: String;
-  user: IUser;
 
   serverId: string;
-  server: IServer;
 
-  messages: IMessage[];
+  messages?: IMessage[];
 
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface IConversation {
@@ -104,3 +100,7 @@ interface IDirectMessage {
   createdAt: string;
   updatedAt: string;
 }
+
+type ChannelType = "text" | "audio" | "video";
+
+type ModalType = "channel" | "sever" | "invite";

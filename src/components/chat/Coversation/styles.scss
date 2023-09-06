@@ -1,30 +1,24 @@
-.chat-conatiner {
+.conversation-container {
     display: grid;
-    grid-template-rows: 10% 80% 10%;
+    grid-template-rows: 5% 85% 10%;
     gap: 0.1rem;
     overflow: hidden;
     @media screen and (min-width: 720px) and (max-width: 1080px) {
         grid-template-rows: 15% 70% 15%;
     }
-    .chat-header {
+    &__header {
         display: flex;
-        justify-content: space-between;
+        gap: 10px;
+        justify-content: flex-start;
         align-items: center;
-        padding: 0 2rem;
-        .user-details {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        .avatar {
-            img {
-            height: 3rem;
-            }
+        padding: 10px;
+        h3 {
+            font-size: 17px;
+            font-weight:500;
+            color: aliceblue;
         }
-        .username {
-            h3 {
-            color: white;
-            }
-        }
+        svg {
+            color: #a1a1aa;
         }
     }
     .chat-messages {

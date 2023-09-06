@@ -32,12 +32,6 @@ const ChatInput: React.FC<Props> = ({ handleSendMsg }): JSX.Element => {
 
   return (
     <div className="chat-input">
-      <div className="button-container">
-        <div className="emoji">
-          {/* <BsEmojiSmileFill onClick={handleEmojiPickerhideShow} /> */}
-          {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
-        </div>
-      </div>
       <form className="input-container" onSubmit={(event) => sendChat(event)}>
         <input
           type="text"
@@ -46,7 +40,7 @@ const ChatInput: React.FC<Props> = ({ handleSendMsg }): JSX.Element => {
           value={msg}
         />
         <button type="submit">
-          <SendRoundedIcon />{" "}
+          <SendRoundedIcon />
         </button>
       </form>
     </div>

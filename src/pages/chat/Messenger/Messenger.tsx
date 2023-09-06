@@ -1,15 +1,10 @@
-import React, { useContext } from "react";
-
-import ChatContainer from "../../../components/chat/ChatContainer/ChatContainer";
-import { MessengerContext } from "../../../configs/context/MessengerContext";
+import React from "react";
+import Conversation from "../../../components/chat/Coversation/Conversation";
 
 const Messenger: React.FC = (): JSX.Element => {
-  const { messState } = useContext(MessengerContext);
-  const { currentChat } = messState;
-
   return (
     <>
-      <ChatContainer currentChat={currentChat} />
+      <Conversation />
     </>
   );
 };

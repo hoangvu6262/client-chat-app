@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef, Ref } from "react";
+import { useImperativeHandle, forwardRef, Ref } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
@@ -8,35 +8,45 @@ import DialogTitle from "@mui/material/DialogTitle";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 
 import CustomModal from "../../shared/Modal/Modal";
-import serverAPI from "../../../api/severApi";
-import AvatarUpload from "../../shared/AvatarUpload/AvatarUpload";
 import useModal from "../../../hooks/useModal";
+import channelAPI from "../../../api/channelApi";
 
-type Props = {};
+type Props = {
+  addChannel: (data: IChannel) => void;
+};
 
-export type RefType = {
-  onToggle: (data?: Record<string, any>) => void;
+export type ChannelModalRefType = {
+  onOpen: (data?: Record<string, any>) => void;
 };
 
 const formSchema = z.object({
   name: z.string().min(1, {
-    message: "Server name is required.",
+    message: "Channel name is required.",
   }),
-  imageUrl: z.any(),
+  type: z.string().min(1, {
+    message: "Type channel is required.",
+  }),
 });
 
-const ServerModal = (props: Props, ref: Ref<RefType>) => {
+const ChannelModal = ({ addChannel }: Props, ref: Ref<ChannelModalRefType>) => {
   const { open, _handleToggle } = useModal();
-
   const { user } = useUser();
+
+  const { serverId } = useParams();
+
+  useImperativeHandle(ref, () => ({
+    onOpen: _handleToggle,
+  }));
+
   const methods = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      imageUrl: "",
+      type: "",
     },
   });
 
@@ -47,26 +57,19 @@ const ServerModal = (props: Props, ref: Ref<RefType>) => {
     formState: { errors, isSubmitting },
   } = methods;
 
-  useImperativeHandle(ref, () => ({
-    onToggle: _handleToggle,
-  }));
-
-  if (!user) {
+  if (!user || !serverId) {
     return null;
   }
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const reader = new FileReader();
-      console.log(values.imageUrl[0].mozFullPath);
-      const newServer = {
+      const data: IChannel = {
+        ...values,
         userId: user.id,
-        server: {
-          name: values.name,
-          imageUrl: values.imageUrl[0].name,
-        },
+        serverId,
       };
-      await serverAPI.createNewServer(newServer);
+      const res = await channelAPI.createNewChannel(data);
+      addChannel(res);
       reset();
     } catch (error) {
       console.log(error);
@@ -83,26 +86,37 @@ const ServerModal = (props: Props, ref: Ref<RefType>) => {
         </DialogContentText>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <AvatarUpload name="imageUrl" />
             <TextField
               autoFocus
               margin="dense"
               id="name"
               {...register("name")}
               type="text"
+              size="small"
               placeholder="Create a new server"
               fullWidth
               //   variant="standard"
             />
-            <Button onClick={handleSubmit(onSubmit)}>Create</Button>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="type"
+              {...register("type")}
+              type="text"
+              size="small"
+              placeholder="Create a new server"
+              fullWidth
+              //   variant="standard"
+            />
+            <DialogActions>
+              <Button onClick={handleSubmit(onSubmit)}>Create</Button>
+              <Button onClick={_handleToggle}>Cancel</Button>
+            </DialogActions>
           </form>
         </FormProvider>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={_handleToggle}>Cancel</Button>
-      </DialogActions>
     </CustomModal>
   );
 };
 
-export default forwardRef(ServerModal);
+export default forwardRef(ChannelModal);

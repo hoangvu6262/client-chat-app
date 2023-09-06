@@ -10,7 +10,7 @@ const channelAPI = {
   },
   getChannelByChannelId: async (channelId: string | undefined) => {
     const response = await apiClient.get<IChannel>(
-      `${API_DOMAIN.SERVER}/${channelId}`
+      `${API_DOMAIN.CHANNEL}/${channelId}`
     );
     return response.data;
   },
