@@ -122,7 +122,11 @@ const Channel: React.FC = (): JSX.Element => {
           </>
         )}
       </div>
-      <MenuDropdown anchorEl={anchorEl} handleClose={handleClose} />
+      <MenuDropdown
+        anchorEl={anchorEl}
+        handleClose={handleClose}
+        handleAddChannel={handleAddChannel}
+      />
       <ChannelModal ref={modalRef} addChannel={handleAddChannel} />
     </>
   );
