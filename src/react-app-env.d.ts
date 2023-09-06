@@ -28,18 +28,18 @@ interface IMessage {
 }
 
 interface IServer {
-  _id: string;
+  _id?: string;
   name: string;
   imageUrl: string;
   inviteCode?: string;
 
   userId: String;
 
-  members: IMember[];
-  channels: IChannel[];
+  members?: IMember[];
+  channels?: IChannel[];
 
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface IMember {

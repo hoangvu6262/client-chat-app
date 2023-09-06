@@ -14,6 +14,7 @@ type Props = {
   required?: boolean;
   rows?: number;
   Icon?: () => JSX.Element;
+  errors?: any;
 };
 
 const CustomInput: React.FC<Props> = ({
@@ -26,13 +27,14 @@ const CustomInput: React.FC<Props> = ({
   required = true,
   placeholder,
   Icon,
+  errors,
 }) => {
   const { register } = useFormContext();
   const inputRef = useRef(null);
 
-  const onChangeInput = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {};
+  // const onChangeInput = (
+  //   e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => {};
 
   return (
     <div
@@ -63,7 +65,7 @@ const CustomInput: React.FC<Props> = ({
         InputLabelProps={{ shrink: true }}
         // onChange={(e) => onChangeInput(e)}
       />
-      {/* <p className="cus-input--err">{errors && t(errors[name]?.message)}</p> */}
+      <p className="cus-input--err">{errors && errors[name]?.message}</p>
     </div>
   );
 };

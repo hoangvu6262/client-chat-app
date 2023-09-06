@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef, Ref } from "react";
+import { useImperativeHandle, forwardRef, Ref } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
@@ -15,7 +15,9 @@ import serverAPI from "../../../api/severApi";
 import AvatarUpload from "../../shared/AvatarUpload/AvatarUpload";
 import useModal from "../../../hooks/useModal";
 
-type Props = {};
+type Props = {
+  addNewServer: (server: IServer) => void;
+};
 
 export type RefType = {
   onToggle: (data?: Record<string, any>) => void;
@@ -28,7 +30,7 @@ const formSchema = z.object({
   imageUrl: z.any(),
 });
 
-const ServerModal = (props: Props, ref: Ref<RefType>) => {
+const ServerModal = ({ addNewServer }: Props, ref: Ref<RefType>) => {
   const { open, _handleToggle } = useModal();
 
   const { user } = useUser();
@@ -44,7 +46,7 @@ const ServerModal = (props: Props, ref: Ref<RefType>) => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    // formState: { errors, isSubmitting },
   } = methods;
 
   useImperativeHandle(ref, () => ({
@@ -57,16 +59,14 @@ const ServerModal = (props: Props, ref: Ref<RefType>) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const reader = new FileReader();
-      console.log(values.imageUrl[0].mozFullPath);
-      const newServer = {
+      const newServer: IServer = {
         userId: user.id,
-        server: {
-          name: values.name,
-          imageUrl: values.imageUrl[0].name,
-        },
+        name: values.name,
+        imageUrl: values.imageUrl[0],
       };
-      await serverAPI.createNewServer(newServer);
+      const res = await serverAPI.createNewServer(newServer);
+      addNewServer(res.server);
+      _handleToggle();
       reset();
     } catch (error) {
       console.log(error);
@@ -82,7 +82,7 @@ const ServerModal = (props: Props, ref: Ref<RefType>) => {
           always change it later.
         </DialogContentText>
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
             <AvatarUpload name="imageUrl" />
             <TextField
               autoFocus
@@ -94,13 +94,13 @@ const ServerModal = (props: Props, ref: Ref<RefType>) => {
               fullWidth
               //   variant="standard"
             />
-            <Button onClick={handleSubmit(onSubmit)}>Create</Button>
+            <DialogActions>
+              <Button onClick={handleSubmit(onSubmit)}>Create</Button>
+              <Button onClick={_handleToggle}>Cancel</Button>
+            </DialogActions>
           </form>
         </FormProvider>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={_handleToggle}>Cancel</Button>
-      </DialogActions>
     </CustomModal>
   );
 };
