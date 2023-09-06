@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import GroupAddOutlinedIcon from "@mui/icons-material/GroupAddOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
@@ -7,13 +8,23 @@ import MenuItem from "@mui/material/MenuItem";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import Divider from "@mui/material/Divider";
 
+import { ChannelModalRefType } from "../ChannelModal/ChannelModal";
+import ChannelModal from "../ChannelModal/ChannelModal";
+
 type Props = {
   anchorEl: HTMLElement | null;
   handleClose: () => void;
+  handleAddChannel: (data: IChannel) => void;
 };
 
-const MenuDropdown = ({ anchorEl, handleClose }: Props) => {
+const MenuDropdown = ({ anchorEl, handleClose, handleAddChannel }: Props) => {
   const open = Boolean(anchorEl);
+
+  const channelRef = useRef<ChannelModalRefType>(null);
+
+  const handleOpenChannelModal = () => {
+    channelRef.current?.onOpen();
+  };
 
   return (
     <>
@@ -71,7 +82,7 @@ const MenuDropdown = ({ anchorEl, handleClose }: Props) => {
         <MenuItem onClick={handleClose}>
           Manage Members <GroupOutlinedIcon />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleOpenChannelModal}>
           Create Channel <TvOutlinedIcon />
         </MenuItem>
         <Divider
@@ -93,6 +104,7 @@ const MenuDropdown = ({ anchorEl, handleClose }: Props) => {
           />
         </MenuItem>
       </Menu>
+      <ChannelModal ref={channelRef} addChannel={handleAddChannel} />
     </>
   );
 };
