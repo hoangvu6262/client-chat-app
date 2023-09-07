@@ -1,12 +1,12 @@
-import React from "react";
-import Conversation from "../../../components/chat/Coversation/Conversation";
+import React from 'react'
+import Conversation from '@/components/chat/Coversation/Conversation'
 
 const Messenger: React.FC = (): JSX.Element => {
-  return (
-    <>
-      <Conversation />
-    </>
-  );
-};
+    return (
+        <>
+            <Conversation />
+        </>
+    )
+}
 
-export default Messenger;
+export default Messenger

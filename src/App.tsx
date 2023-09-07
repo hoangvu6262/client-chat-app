@@ -3,14 +3,7 @@ import ServerLayout from "./layouts/server/ServerLayout";
 import Messenger from "./pages/chat/Messenger/Messenger";
 import PrivateRoute from "./configs/routes/PrivateRoute";
 
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  RedirectToSignIn,
-  SignIn,
-  SignUp,
-} from "@clerk/clerk-react";
+import { ClerkProvider, SignIn, SignUp } from "@clerk/clerk-react";
 import {
   BrowserRouter,
   Navigate,
