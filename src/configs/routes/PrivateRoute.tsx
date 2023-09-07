@@ -1,23 +1,18 @@
 import React from "react";
-import { useLocation, Navigate } from "react-router-dom";
-import { useUser } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 
-import ServerLayout from "../../layouts/server/ServerLayout";
+type Props = {
+  children: React.ReactNode;
+};
 
-const PrivateRoute: React.FC = () => {
-  const { user, isSignedIn } = useUser();
-  const location = useLocation();
-
-  console.log(user, isSignedIn);
-
-  if (!user) {
-    return <Navigate to="/sign-in" />;
-  }
-
-  if (location.pathname === "/") {
-    return <Navigate to="/server" />;
-  }
-
-  return <ServerLayout />;
+const PrivateRoute: React.FC<Props> = ({ children }) => {
+  return (
+    <>
+      <SignedIn>{children}</SignedIn>
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
+    </>
+  );
 };
 export default PrivateRoute;

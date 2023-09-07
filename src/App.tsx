@@ -1,7 +1,7 @@
 import ChatRoomLayout from "./layouts/chat/ChatRoomLayout";
 import ServerLayout from "./layouts/server/ServerLayout";
 import Messenger from "./pages/chat/Messenger/Messenger";
-// import PrivateRoute from "./configs/routes/PrivateRoute";
+import PrivateRoute from "./configs/routes/PrivateRoute";
 
 import {
   ClerkProvider,
@@ -52,27 +52,17 @@ function ClerkProviderWithRoutes() {
           <Route
             path="/"
             element={
-              <>
-                <SignedIn>
-                  <Navigate to="/server" />
-                </SignedIn>
-                <SignedOut>
-                  <RedirectToSignIn />
-                </SignedOut>
-              </>
+              <PrivateRoute>
+                <Navigate to="/server" />
+              </PrivateRoute>
             }
           />
           <Route
             path="/server/*"
             element={
-              <>
-                <SignedIn>
-                  <ServerLayout />
-                </SignedIn>
-                <SignedOut>
-                  <RedirectToSignIn />
-                </SignedOut>
-              </>
+              <PrivateRoute>
+                <ServerLayout />
+              </PrivateRoute>
             }
           >
             <Route path=":serverId/*" element={<ChatRoomLayout />}>
