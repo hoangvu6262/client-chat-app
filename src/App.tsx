@@ -1,6 +1,7 @@
 import ChatRoomLayout from "./layouts/chat/ChatRoomLayout";
 import ServerLayout from "./layouts/server/ServerLayout";
 import Messenger from "./pages/chat/Messenger/Messenger";
+import PrivateRoute from "./configs/routes/PrivateRoute";
 
 import {
   ClerkProvider,
@@ -10,7 +11,13 @@ import {
   SignIn,
   SignUp,
 } from "@clerk/clerk-react";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 // Create a client
@@ -26,7 +33,12 @@ function ClerkProviderWithRoutes() {
   const navigate = useNavigate();
 
   return (
-    <ClerkProvider publishableKey={clerkPubKey} navigate={(to) => navigate(to)}>
+    <ClerkProvider
+      publishableKey={clerkPubKey}
+      navigate={() => {
+        return navigate("/server");
+      }}
+    >
       <QueryClientProvider client={queryClient}>
         <Routes>
           <Route
@@ -38,16 +50,19 @@ function ClerkProviderWithRoutes() {
             element={<SignUp routing="path" path="/sign-up" />}
           />
           <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Navigate to="/server" />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/server/*"
             element={
-              <>
-                <SignedIn>
-                  <ServerLayout />
-                </SignedIn>
-                <SignedOut>
-                  <RedirectToSignIn />
-                </SignedOut>
-              </>
+              <PrivateRoute>
+                <ServerLayout />
+              </PrivateRoute>
             }
           >
             <Route path=":serverId/*" element={<ChatRoomLayout />}>

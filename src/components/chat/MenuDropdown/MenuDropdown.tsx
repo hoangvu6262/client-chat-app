@@ -9,7 +9,9 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import Divider from "@mui/material/Divider";
 
 import { ChannelModalRefType } from "../ChannelModal/ChannelModal";
+import { InviteModalRefType } from "../../server/InviteModal/InviteModal";
 import ChannelModal from "../ChannelModal/ChannelModal";
+import InviteModal from "../../server/InviteModal/InviteModal";
 
 type Props = {
   anchorEl: HTMLElement | null;
@@ -21,9 +23,14 @@ const MenuDropdown = ({ anchorEl, handleClose, handleAddChannel }: Props) => {
   const open = Boolean(anchorEl);
 
   const channelRef = useRef<ChannelModalRefType>(null);
+  const inviteRef = useRef<InviteModalRefType>(null);
 
   const handleOpenChannelModal = () => {
     channelRef.current?.onOpen();
+  };
+
+  const handleOpenInviteModal = () => {
+    inviteRef.current?.onOpen();
   };
 
   return (
@@ -64,7 +71,7 @@ const MenuDropdown = ({ anchorEl, handleClose, handleAddChannel }: Props) => {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem
-          onClick={handleClose}
+          onClick={handleOpenInviteModal}
           style={{
             color: "#818cf8",
           }}
@@ -105,6 +112,7 @@ const MenuDropdown = ({ anchorEl, handleClose, handleAddChannel }: Props) => {
         </MenuItem>
       </Menu>
       <ChannelModal ref={channelRef} addChannel={handleAddChannel} />
+      <InviteModal ref={inviteRef} />
     </>
   );
 };
