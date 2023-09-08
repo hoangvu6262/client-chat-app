@@ -1,108 +1,108 @@
 /// <reference types="react-scripts" />
 
 interface IUser {
-  _id?: string;
-  username: string;
-  userId: string;
-  email: string;
-  password?: string;
-  isAvatarImageSet?: boolean;
-  avatarImage: string;
+    _id?: string
+    username: string
+    userId: string
+    email: string
+    password?: string
+    isAvatarImageSet?: boolean
+    avatarImage: string
 
-  createdAt?: string;
-  updatedAt?: string;
+    createdAt?: string
+    updatedAt?: string
 }
 
 interface IMessage {
-  _id: string;
-  message: string;
-  users: IUser[];
-  sender: string;
-  fileUrl: string;
+    _id: string
+    message: string
+    users: IUser[]
+    sender: string
+    fileUrl: string
 
-  channelId: string;
-  channel: IChannel;
+    channelId: string
+    channel: IChannel
 
-  createdAt: string;
-  updatedAt: string;
+    createdAt: string
+    updatedAt: string
 }
 
 interface IServer {
-  _id?: string;
-  name: string;
-  imageUrl: string;
-  inviteCode?: string;
+    _id?: string
+    name: string
+    imageUrl: string
+    inviteCode?: string
 
-  userId: String;
+    userId: String
 
-  members?: IMember[];
-  channels?: IChannel[];
+    members?: IMember[]
+    channels?: IChannel[]
 
-  createdAt?: string;
-  updatedAt?: string;
+    createdAt?: string
+    updatedAt?: string
 }
 
 interface IMember {
-  _id: string;
-  role: string;
+    _id?: string
+    role: string
 
-  userId: String;
+    userId: String
 
-  serverId: string;
+    serverId: string
 
-  messages: IMessage[];
-  directMessages: IDirectMessage[];
+    messages?: IMessage[]
+    directMessages?: IDirectMessage[]
 
-  conversationsInitiated: IConversation[];
-  conversationsReceived: IConversation[];
+    conversationsInitiated?: IConversation[]
+    conversationsReceived?: IConversation[]
 
-  createdAt: string;
-  updatedAt: string;
+    createdAt?: string
+    updatedAt?: string
 }
 
 interface IChannel {
-  _id?: string;
-  name: string;
-  type: string;
+    _id?: string
+    name: string
+    type: string
 
-  userId: String;
+    userId: String
 
-  serverId: string;
+    serverId: string
 
-  messages?: IMessage[];
+    messages?: IMessage[]
 
-  createdAt?: string;
-  updatedAt?: string;
+    createdAt?: string
+    updatedAt?: string
 }
 
 interface IConversation {
-  _id: string;
-  memberOneId: string;
-  memberOne: IMember;
+    _id: string
+    memberOneId: string
+    memberOne: IMember
 
-  memberTwoId: string;
-  memberTwo: IMember;
+    memberTwoId: string
+    memberTwo: IMember
 
-  directMessages: IDirectMessage[];
+    directMessages: IDirectMessage[]
 }
 
 interface IDirectMessage {
-  _id: string;
-  content: string;
-  fileUrl: string;
+    _id: string
+    content: string
+    fileUrl: string
 
-  memberId: string;
-  member: IMember;
+    memberId: string
+    member: IMember
 
-  conversationId: string;
-  conversation: IConversation;
+    conversationId: string
+    conversation: IConversation
 
-  createdAt: string;
-  updatedAt: string;
+    createdAt: string
+    updatedAt: string
 }
 
-type ChannelType = "text" | "audio" | "video";
+type ChannelType = 'text' | 'audio' | 'video'
 
-type ModalType = "channel" | "sever" | "invite";
+type ModalType = 'channel' | 'sever' | 'invite'
 
-type ChatAppArray<ElemTypes> = ElemTypes[];
+type ChatAppArray<ElemTypes> = ElemTypes[]

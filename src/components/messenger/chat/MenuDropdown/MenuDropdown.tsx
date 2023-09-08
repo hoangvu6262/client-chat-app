@@ -8,11 +8,11 @@ import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined'
 import TvOutlinedIcon from '@mui/icons-material/TvOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 
-import { InviteModalRefType } from '@/components/server/InviteModal/InviteModal'
+import { InviteModalRefType } from '@/components/messenger/server/InviteModal/InviteModal'
 import ChannelModal, {
     ChannelModalRefType,
-} from '@/components/chat/ChannelModal/ChannelModal'
-import InviteModal from '@/components/server/InviteModal/InviteModal'
+} from '@/components/messenger/chat/ChannelModal/ChannelModal'
+import InviteModal from '@/components/messenger/server/InviteModal/InviteModal'
 
 type Props = {
     anchorEl: HTMLElement | null

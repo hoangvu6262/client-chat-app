@@ -5,4 +5,5 @@ export const API_DOMAIN = {
     MASSAGE: `${BASE_URL}/message`,
     SERVER: `${BASE_URL}/server`,
     CHANNEL: `${BASE_URL}/channel`,
+    MEMBER: `${BASE_URL}/member`,
 }
