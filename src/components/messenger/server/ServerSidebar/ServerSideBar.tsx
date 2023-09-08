@@ -7,9 +7,9 @@ import { useQuery } from 'react-query'
 
 import { MessengerContext } from '@/configs/context/MessengerContext'
 import serverAPI from '@/api/severApi'
-import ServerItems from '@/components/server/ServerItems/ServerItems'
-import ServerModal from '@/components/server/ServerModal/ServerModal'
-import { RefType } from '@/components/server/ServerModal/ServerModal'
+import ServerItems from '@/components/messenger/server/ServerItems/ServerItems'
+import ServerModal from '@/components/messenger/server/ServerModal/ServerModal'
+import { RefType } from '@/components/messenger/server/ServerModal/ServerModal'
 
 const ServerSideBar = () => {
     const [servers, setServers] = useState<IServer[]>([])
